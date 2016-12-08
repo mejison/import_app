@@ -29,46 +29,34 @@
 			</div>
 		</nav>
 		
-		<div class="container">
+		<div class="container" ng-controller="UploadCtrl">
 			<div class="row">
-				<div class="col-xs-6 col-xs-offset-3">
-					<div class="well">
-						<form class="form-horizontal ng-pristine ng-invalid ng-invalid-required" enctype="multipart/form-data">
-							<div class="drag-area btn-upload text-center" >
-								<div class="inner-upload-box">
-									<i class="fa fa-cloud-upload"></i><br>
-									Drag the file here.
-									<span class="drag-span">We support .xls, .xlsx and .csv files.</span>
-								</div>
-								
-								<div class="inner-upload-box ng-hide" ng-show="status &gt; 0">
-									<div class="top-upload-box">
-									</div>
-									
-									<div class="progress progress-bar-default">
-										<div class="progress-bar" ng-class="{'progress-bar-success': status == 2, 'progress-bar-danger': status == 3}" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width: %;">
-											<i class="fa fa-check"></i>
-											<i class="fa fa-times"></i>
-										</div>
-									</div>
-								</div>
-								<input  ng-model="xlsFile" ng-change="uploadFile(xlsFile)" name="file" required="" class="ng-pristine ng-invalid ng-invalid-required" type="file" />
-							</div>
-							
-							<div class="import-actions">
-								<span type="button" class="btn btn-primary btn-upload" ng-click="">
-									<span>Press for select file</span>
-									<input ng-model="xlsFile" ng-change="uploadFile(xlsFile)" name="file" required="" class="ng-pristine ng-invalid ng-invalid-required" type="file">
-								</span>
-								&nbsp;
-							</div>
-						</form>
-					</div>
-				</div>
+
+				<upload to="/path/to/upload/script.php" ng-model="object.id">
+					files
+				</upload>
+
 				<div class="col-xs-6 col-xs-offset-3 text-right">
 					<div class="form-group">
-						<button class="btn btn-primary">Next</button>
-						<button class="btn btn-default">Cansel</button>
+						<ul class="nav nav-pills nav-justified"> 
+							<li role="presentation" class="active"><a href="#">Step-1</a></li> 
+							<li role="presentation"><a href="#">Step-2</a></li> 
+							<li role="presentation"><a href="#">Step-3</a></li> 
+						</ul>
+					</div>				
+
+					<div class="well">
+						<div class="well upload-wrap file-enter text-center file-enter">
+							<i class="fa fa-upload" aria-hidden="true"></i>
+							<h3>Drag and Drop file</h3>
+							<span>Support files *.csv, *.xls, *.xlsx</span>
+							<input type="file" class="file" />
+						</div>
+						<span class="btn btn-primary file-enter pull-left">
+							Enter file
+							<input type="file" class="file" />
+						</span>
+						<button class="btn btn-primary disabled">Next</button>
 					</div>
 				</div>
 			</div>
@@ -79,7 +67,6 @@
 		<script src="js/jquery.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/angular.min.js"></script>
-		<script src="js/angular-route.js"></script>
 		<script src="js/app.js"></script>
 	</body>
 

@@ -1,8 +1,21 @@
 (function () {
     'use strict';
-    angular.module('app', [
-		 'ngRoute'
-	]);
+    angular.module('app', [	]);
+})();
+
+;
+
+
+(function () {
+    'use strict';
+
+    angular.module('app')
+        .controller('NavCtrl', [ '$scope',  '$window', '$location', '$http', '$timeout', NavCtrl]);
+
+    function NavCtrl($scope, $rootScope, $window, $location, $http, $timeout) {
+		$scope.main = "main";
+	}
+
 })();
 
 ;
@@ -11,10 +24,10 @@
     'use strict';
 
     angular.module('app')
-        .controller('NavCtrl', [ '$scope', '$rootScope', '$window', '$location', '$http', '$timeout', NavCtrl]);
+        .controller('UploadCtrl', [ '$scope',  '$window', '$location', '$http', '$timeout', UploadCtrl]);
 
-    function NavCtrl($scope, $rootScope, $window, $location, $http, $timeout) {
-		$scope.main = "main";
-	}
+    function UploadCtrl($scope, $rootScope, $window, $location, $http, $timeout) {
+   
+    }
 
 })();

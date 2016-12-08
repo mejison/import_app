@@ -12,86 +12,33 @@ footer {
     margin: 50px 0;
 }
 
-input[type="file"] {
-  display: block;
+.file-enter {
+  position: relative;
+  overflow: hidden;
 }
 
-.btn-upload input[type="file"] {
+input.file {
+  display: block;
   cursor: pointer;
-  font-size: 150px;
   opacity: 0;
+  z-index: 1000;
   position: absolute;
   right: 0;
-  top: 0;
-  z-index: 1;
-}
-
-.compose-textarea .fake-textarea {
-  border-color: transparent;
-  height: 206px;
   left: 0;
-  margin-bottom: 15px;
-  overflow: hidden;
-  position: absolute;
+  bottom: 0;
   top: 0;
-  z-index: 0;
+  width: 100%;
 }
 
-.inner-upload-box {
-  height: 100px;
-  position: relative;
-  z-index: 0;
+div.upload-wrap {
+  border: 2px dashed #ddd;
 }
 
-.btn-upload > * {
-  position: relative;
-  z-index: 0;
+div.upload-wrap span {
+    color: #999;
 }
 
-.drag-area {
-  background: #eaeaea none repeat scroll 0 0;
-  border: 3px dashed #dfdfdf;
-  border-radius: 4px;
-  display: block;
-  margin-bottom: 15px;
-  padding: 50px;
-}
-
-.btn-upload {
-  overflow: hidden;
-  position: relative;
-  z-index: 0;
-}
-
-.inner-upload-box {
-  height: 100px;
-  position: relative;
-  z-index: 0;
-}
-
-.compose-textarea {
-  margin-bottom: 15px;
-  position: relative;
-  z-index: 0;
-}
-
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
-  display: none !important;
-}
-
-.inner-upload-box {
-  height: 100px;
-  position: relative;
-  z-index: 0;
-}
-
-.drag-span {
-  display: block;
-  font-size: 12px;
-}
-
-.drag-area > .inner-upload-box > .fa {
-  color: #a3a3a3;
-  font-size: 60px;
+div.upload-wrap i.fa-upload {
+  font-size: 40px;
 }
 
