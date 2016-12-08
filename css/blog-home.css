@@ -42,3 +42,6 @@ div.upload-wrap i.fa-upload {
   font-size: 40px;
 }
 
+div.amimate {
+	transition: all 1s ease-in 0s;
+}

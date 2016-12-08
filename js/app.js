@@ -5,7 +5,6 @@
 
 ;
 
-
 (function () {
     'use strict';
 
@@ -27,7 +26,92 @@
         .controller('UploadCtrl', [ '$scope',  '$window', '$location', '$http', '$timeout', UploadCtrl]);
 
     function UploadCtrl($scope, $rootScope, $window, $location, $http, $timeout) {
-   
-    }
+		$scope.step = 1;
+		$scope.progress = 0;
+		$scope.next_step = 1;
+		
+		$scope.compare = {};
+
+		$scope.init = function()
+		{
+			$scope.compare.field = ['id', 'name', 'article', 'price', 'oldprice'];
+		}
+
+		$scope.init();
+
+		$scope.change_step = function(new_step)
+		{
+			$scope.step = new_step;
+		}
+
+		$scope.upload_files = function(files)
+		{
+			$scope.progress = 0;
+			$scope.next_step = $scope.step;
+			$scope.$apply();
+			var xhr = new XMLHttpRequest(),
+				fd = new FormData();
+				fd.append('files', files[0]);							
+					
+			xhr.open("POST", "server.php");
+			xhr.onreadystatechange = function()
+			{
+				if (xhr.readyState == 4)
+				{
+					$scope.next_step = 2;
+					$scope.$apply();
+				}
+			}
+			
+			xhr.upload.onprogress = function(progress)
+			{
+				$scope.progress = Math.floor(100 * progress.loaded / progress.total);
+				$scope.$apply();						
+			}
+			xhr.send(fd);
+		};
+	}
 
 })();
+
+;
+
+(function () {
+    'use strict';
+    angular.module('app')
+		.directive('changefile', [function() {
+			return {
+				restrict: 'A',
+				'link' : function($scope, element)
+				{
+					element.on('change', function(event)
+					{
+						$scope.upload_files(event.target.files);
+					});
+				}
+			};
+		}]);
+})();
+
+;
+
+jQuery.event.props.push("dataTransfer");
+
+;
+
+(function() {
+	'use strict';
+	angular.module('app')
+		.directive('dragwrap', [function () {
+		return {
+			restrict: 'A',
+			link: function ($scope, element) {
+				element.bind('drop', function (event) {
+					$scope.upload_files(event.dataTransfer.files);
+				});
+
+			}
+		};
+	}]);
+})();
+

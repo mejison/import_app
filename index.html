@@ -31,33 +31,64 @@
 		
 		<div class="container" ng-controller="UploadCtrl">
 			<div class="row">
-
-				<upload to="/path/to/upload/script.php" ng-model="object.id">
-					files
-				</upload>
-
 				<div class="col-xs-6 col-xs-offset-3 text-right">
 					<div class="form-group">
 						<ul class="nav nav-pills nav-justified"> 
-							<li role="presentation" class="active"><a href="#">Step-1</a></li> 
-							<li role="presentation"><a href="#">Step-2</a></li> 
-							<li role="presentation"><a href="#">Step-3</a></li> 
+							<li role="presentation" ng-class="{'active' : step == item}"  ng-click="step >= item ? change_step(item) : ''" ng-repeat="item in [1, 2, 3]"><a href="#">Step-{{item}}</a></li>
 						</ul>
 					</div>				
 
-					<div class="well">
-						<div class="well upload-wrap file-enter text-center file-enter">
-							<i class="fa fa-upload" aria-hidden="true"></i>
-							<h3>Drag and Drop file</h3>
-							<span>Support files *.csv, *.xls, *.xlsx</span>
-							<input type="file" class="file" />
+					<div class="well" ng-show="step == 1">
+						<div class="well upload-wrap text-center file-enter" dragwrap>
+							<div ng-show=" ! progress">
+								<i class="fa fa-upload" aria-hidden="true"></i>
+								<h3>Drag and Drop file</h3>
+								<span>Support files *.csv, *.xls, *.xlsx</span>
+								<input type="file" class="file" changefile />
+							</div>
+							<div ng-show="progress">
+								<div class="progress">
+								  <div class="progress-bar amimate" ng-class="{'progress-bar-success' : progress == 100}" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%;">
+									{{progress}} %
+								  </div>
+								</div>
+							</div>
 						</div>
 						<span class="btn btn-primary file-enter pull-left">
 							Enter file
-							<input type="file" class="file" />
+							<input type="file" class="file" changefile />
 						</span>
-						<button class="btn btn-primary disabled">Next</button>
+						<button class="btn btn-primary" ng-click="change_step(next_step)" ng-disabled="step == next_step">Next</button>
 					</div>
+
+					<div class="well" ng-show="step == 2">
+						<div class="well text-center">
+							<h3>Parse file</h3>
+							<div class="panel panel-default">
+							  <div class="panel-heading">Panel compare</div>
+								<table class="table table-bordered table-striped">
+									<thead>
+										<tr >
+											<td ng-repeat="field in compare.field">
+												<select class="form-control">	
+													<option ng-repeat="field_ex in compare.field"  ng-selected="field == field_ex">{{field_ex}}</option>
+												</select>
+											</td>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+						<button class="btn btn-primary" ng-click="change_step(next_step)" ng-disabled="step == next_step">Next</button>
+					</div>
+
+					<div class="well" ng-show="step == 3">
+						<div class="well text-center">
+							<h3>Finish page</h3>
+						</div>
+						<button class="btn btn-primary" ng-click="change_step(next_step)" ng-disabled="step == next_step">Next</button>
+					</div>
+
 				</div>
 			</div>
 		</div>
