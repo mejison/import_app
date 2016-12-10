@@ -29,12 +29,21 @@
 		$scope.step = 1;
 		$scope.progress = 0;
 		$scope.next_step = 1;
-		
 		$scope.compare = {};
-
+		$scope.compare.data = {};
+		
 		$scope.init = function()
 		{
-			$scope.compare.field = ['id', 'name', 'article', 'price', 'oldprice'];
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', 'server.php?action=get_nav');
+			xhr.onreadystatechange = function()
+			{
+				if (xhr.readyState == 4)
+				{
+					$scope.compare.field = JSON.parse(xhr.responseText);
+				}
+			}
+			xhr.send();
 		}
 
 		$scope.init();
@@ -53,11 +62,14 @@
 				fd = new FormData();
 				fd.append('files', files[0]);							
 					
-			xhr.open("POST", "server.php");
+			xhr.open("POST", "server.php?action=upload_file");
 			xhr.onreadystatechange = function()
 			{
 				if (xhr.readyState == 4)
 				{
+					var response = JSON.parse(xhr.responseText);
+					$scope.compare.data = response['data'] ? response['data'] : [];				
+					
 					$scope.next_step = 2;
 					$scope.$apply();
 				}
