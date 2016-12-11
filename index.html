@@ -68,9 +68,9 @@
 							  <div class="panel-heading">Panel compare</div>
 								<table class="table table-bordered table-striped">
 									<thead>
-										<tr >
-											<td ng-repeat="field in compare.field">
-												<select class="form-control">	
+										<tr>
+											<td ng-repeat="(key, field) in compare.field">
+												<select class="form-control" ng-model="compare.mask[key]">	
 													<option ng-repeat="field_ex in compare.field"  ng-selected="field == field_ex">{{field_ex}}</option>
 												</select>
 											</td>
@@ -86,14 +86,13 @@
 								</table>
 							</div>
 						</div>
-						<button class="btn btn-primary" ng-click="change_step(next_step)" ng-disabled="step == next_step">Next</button>
+						<button class="btn btn-primary" ng-click="save_items(); next_step = 3; change_step(next_step);" >Next</button>
 					</div>
 
 					<div class="well" ng-show="step == 3">
 						<div class="well text-center">
 							<h3>Finish page</h3>
 						</div>
-						<button class="btn btn-primary" ng-click="change_step(next_step)" ng-disabled="step == next_step">Next</button>
 					</div>
 
 				</div>

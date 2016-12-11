@@ -3,7 +3,16 @@
 	
 		public function get_nav($post)
 		{
-			return array('id', 'name', 'price', 'oldprice');
+			$field = array();
+			$db = new mysqli('localhost', 'root', '', 'test');
+			$db->set_charset('SET NAME utf8');
+			$result = $db->query('select * from `car_items`');
+			foreach($result->fetch_fields() as $row)
+			{
+				$field[] = $row->name;
+			}
+			$db->close();
+			return $field;
 		}
 		
 		public function upload_file($post)
@@ -15,20 +24,20 @@
 			}
 			
 			$ext = pathinfo($_FILES['files']['name'], PATHINFO_EXTENSION);
-			$file_name = 'upload_' . time() . $ext;
+			$file_name = 'upload_' . time() . '.' . $ext;
 			if(rename($_FILES['files']['tmp_name'], $new_path = $path . $file_name))
 			{
+				$method = '';
 				$data = array();
-				if (method_exists($this, 'parse_' . $ext))
+				if (method_exists($this, $method = 'parse_' . $ext))
 				{
-					$method = 'parse_' . $ext;
 					$data = $this->$method($new_path);
 				}
 				else
 				{
 					return array('upload_success' => FALSE);
 				}
-				return array('upload_success' => TRUE, data => $data);
+				return array('upload_success' => TRUE, 'data' => $data, 'file' => $file_name, 'method' => $method);
 			}
 			return array('upload_success' => FALSE);
 		}
@@ -47,6 +56,32 @@
 		private function parse_xls($file)
 		{
 			
+		}
+		
+		public function save_items($post)
+		{
+			$field = array();
+			foreach($post as $key => $value)
+			{
+				if (is_int($key))
+				{
+					$field[$key] = $value;
+				}
+			}
+			
+			$data = $this->$post['method']("./imports/" . $post['file_name']);
+			$connect = new mysqli('localhost', 'root', '', 'test');
+			
+			foreach ($data as $row)
+			{
+				$sql = "INSERT INTO `car_items` (`";
+				$sql .= implode("`,`", $field);
+				$sql .= "`) VALUES ('";
+				$sql .= implode("','", $row) . "')";
+				$connect->query($sql);
+			}
+			
+			return TRUE;
 		}
 		
 	}
